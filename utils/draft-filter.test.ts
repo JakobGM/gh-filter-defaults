@@ -22,6 +22,24 @@ describe("withDraftFilter", () => {
     },
   );
 
+  it("does not change a query with a draft qualifier in parentheses", () => {
+    const q = encodeURIComponent("is:pr (draft:true)");
+    expect(query(`https://github.com/owner/repo/pulls?q=${q}`)).toBeNull();
+  });
+
+  it("replaces draft:any with a query for draft and non-draft pull requests", () => {
+    const q = encodeURIComponent("is:pr draft:any is:open");
+    expect(query(`https://github.com/owner/repo/pulls?q=${q}`)).toBe(
+      "is:pr (draft:true OR draft:false) is:open",
+    );
+  });
+
+  it("does not change the query after draft:any is replaced", () => {
+    const first = withDraftFilter(new URL("https://github.com/owner/repo/pulls?q=draft%3Aany"));
+    expect(first).not.toBeNull();
+    expect(withDraftFilter(first!)).toBeNull();
+  });
+
   it("does not match draft: inside another word", () => {
     expect(query("https://github.com/owner/repo/pulls?q=label%3Anodraft%3Ax")).toBe(
       "label:nodraft:x draft:false",

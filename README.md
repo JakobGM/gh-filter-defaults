@@ -10,7 +10,7 @@ A browser extension that changes the default filters of GitHub pull request list
 
 The extension adds `draft:false` to the search query of pull request lists. It does not change the query if the query already has a `draft:` qualifier.
 
-To see only draft pull requests, add `draft:true` to the query. At the moment, you cannot see draft and non-draft pull requests in the same list.
+To see only draft pull requests, add `draft:true` to the query. To see draft and non-draft pull requests, add `draft:any`. GitHub has no `draft:any` value, so the extension replaces it with `(draft:true OR draft:false)`.
 
 The extension changes these pages:
 
