@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "platformAutomerge": true,
+  "automerge": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["actions/*", "github/*"],
+      "automerge": true
+    }
+  ]
+}
